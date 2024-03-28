@@ -1,4 +1,5 @@
-pragma solidity ^0.4.24;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.25;
 
 /*
  * @title String & slice utility library for Solidity contracts.
