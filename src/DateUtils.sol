@@ -148,7 +148,7 @@ library DateUtils {
    }
 
    // functions to convert between string slice objects and integers
-   function convertSliceToUint16(strings.slice s) private pure returns (uint16) {
+   function convertSliceToUint16(strings.slice memory s) private pure returns (uint16) {
 
      bytes32 digits;
      digits = StringUtils.stringToBytes32(s.toString());
@@ -156,7 +156,7 @@ library DateUtils {
      return uint16(StringUtils.bytesToUInt(digits));
    }
 
-   function convertSliceToUint8(strings.slice s) private pure returns (uint8) {
+   function convertSliceToUint8(strings.slice memory s) private pure returns (uint8) {
 
      bytes32 digits;
      digits = StringUtils.stringToBytes32(s.toString());
@@ -165,7 +165,7 @@ library DateUtils {
    }
 
    // functions to split date strings into component slice objects
-   function splitISOslice(string _dt) private pure returns (strings.slice[3]) {
+   function splitISOslice(string memory _dt) private pure returns (strings.slice[3] memory) {
 
      strings.slice[3] memory sArr;
 
@@ -179,7 +179,7 @@ library DateUtils {
      return sArr;
    }
 
-   function splitTimeSlice(string _time) private pure returns (strings.slice[3]) {
+   function splitTimeSlice(string memory _time) private pure returns (strings.slice[3] memory) {
 
      strings.slice[3] memory sArr;
 
@@ -200,7 +200,7 @@ library DateUtils {
     @return minute Returns minute as `uint8`
     @return second Returns second as `uint8`
    */
-   function splitTimeInt(string _time)
+   function splitTimeInt(string memory _time)
                          internal pure
                          returns (uint8 hour,
                                   uint8 minute,
@@ -223,7 +223,7 @@ library DateUtils {
     @param _dt Date as string
     @return Returns `true` if `_dt` is valid ISO format, `false` otherwise
    */
-   function isISOformat(string _dt) internal pure returns (bool) {
+   function isISOformat(string memory _dt) internal pure returns (bool) {
 
      strings.slice memory sDate = _dt.toSlice();
      strings.slice memory sHyphen = "-".toSlice();
@@ -258,7 +258,7 @@ library DateUtils {
    }
 
    // check valid time format (hh:mm:ss)
-   function isTimeFormat(string _time) private pure returns (bool) {
+   function isTimeFormat(string memory _time) private pure returns (bool) {
 
      strings.slice memory sTime = _time.toSlice();
      strings.slice memory sColon = ":".toSlice();
@@ -299,7 +299,7 @@ library DateUtils {
     @return Returns `true` if `_dt` is valid yyyy-mm-dd hh:mm:ss format,
             `false` otherwise
    */
-   function isISOtimeFormat(string _dt) internal pure returns (bool) {
+   function isISOtimeFormat(string memory _dt) internal pure returns (bool) {
 
      strings.slice memory sDate = _dt.toSlice();
      strings.slice memory sSpace = " ".toSlice();
@@ -566,7 +566,7 @@ library DateUtils {
                            uint8 _m,
                            uint8 _d)
                            private pure
-                           returns (strings.slice[]) {
+                           returns (strings.slice[] memory) {
 
      strings.slice[] memory sYMD = new strings.slice[](3);
 
@@ -655,7 +655,7 @@ library DateUtils {
     @param _dt Date as timestamp integer
     @return Returns date as ISO date string ("yyyy-mm-dd")
    */
-   function convertTimestampToDateString(uint256 _dt) internal pure returns (string) {
+   function convertTimestampToDateString(uint256 _dt) internal pure returns (string memory) {
 
      uint16 year;
      uint8 month;
@@ -670,7 +670,7 @@ library DateUtils {
     @param _dt Date as timestamp integer
     @return Returns date as date and time string ("yyyy-mm-dd hh:mm:ss")
    */
-   function convertTimestampToDateTimeString(uint256 _dt) internal pure returns (string) {
+   function convertTimestampToDateTimeString(uint256 _dt) internal pure returns (string memory) {
 
      uint16 year;
      uint8 month;
@@ -688,7 +688,7 @@ library DateUtils {
     @param _dt Date as ISO date string ("yyyy-mm-dd")
     @return Returns timestamp as `uint256`
    */
-   function convertDateStringToTimestamp(string _dt) internal pure returns (uint256) {
+   function convertDateStringToTimestamp(string memory _dt) internal pure returns (uint256) {
 
      require(isISOformat(_dt));
 
@@ -705,7 +705,7 @@ library DateUtils {
     @param _dt Date as date and time string ("yyyy-mm-dd hh:mm:ss")
     @return Returns timestamp as `uint256`
    */
-   function convertDateTimeStringToTimestamp(string _dt) internal pure returns (uint256) {
+   function convertDateTimeStringToTimestamp(string memory _dt) internal pure returns (uint256) {
 
      require(isISOtimeFormat(_dt));
 
@@ -727,7 +727,7 @@ library DateUtils {
     @return month Returns month as `uint8`
     @return day Returns day as `uint8`
    */
-   function convertDateStringToYMD(string _dt)
+   function convertDateStringToYMD(string memory _dt)
                                    internal pure
                                    returns (uint16 year,
                                             uint8 month,
@@ -755,7 +755,7 @@ library DateUtils {
     @return minute Returns minute as `uint8`
     @return second Returns second as `uint8`
    */
-   function convertDateTimeStringToYMDHMS(string _dt)
+   function convertDateTimeStringToYMDHMS(string memory _dt)
                                           internal pure
                                           returns (uint16 year,
                                                    uint8 month,
@@ -788,7 +788,7 @@ library DateUtils {
                                    uint8 _month,
                                    uint8 _day)
                                    internal pure
-                                   returns (string) {
+                                   returns (string memory) {
 
      require(isValidYMD(_year, _month, _day));
 
@@ -823,7 +823,7 @@ library DateUtils {
                                           uint8 _minute,
                                           uint8 _second)
                                           internal pure
-                                          returns (string) {
+                                          returns (string memory) {
 
      require(isValidYMDHMS(_year, _month, _day, _hour, _minute, _second));
 
