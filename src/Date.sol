@@ -72,7 +72,7 @@ contract Date {
    constructor(uint16 _year,
                uint8 _month,
                uint8 _day)
-               public {
+                {
 
      require(DateUtils.isValidYMD(_year, _month, _day));
 
@@ -107,7 +107,7 @@ contract Date {
 
    // function to set YMDHMS members, dt struct, and dtTime struct
    // with ISO date string
-   function setYMDwithISO(string _isoDate) private {
+   function setYMDwithISO(string memory _isoDate) private {
 
      (year, month, day) = DateUtils.convertDateStringToYMD(_isoDate);
      hour = 0;
@@ -128,7 +128,7 @@ contract Date {
 
    // function to set YMDHMS members, dt struct, and dtTime struct
    // with date and time string
-   function setYMDHMSwithISOtime(string _isoDateTime) private {
+   function setYMDHMSwithISOtime(string memory _isoDateTime) private {
 
      strings.slice memory sISOdateTime = _isoDateTime.toSlice();
      strings.slice memory sISOdate;
@@ -164,7 +164,7 @@ contract Date {
     @dev Set date from date string
     @param _dt Date as ISO date string ("yyyy-mm-dd")
    */
-   function setDateFromString(string _dt) public {
+   function setDateFromString(string memory _dt) public {
 
      require(DateUtils.isISOformat(_dt));
 
@@ -179,7 +179,7 @@ contract Date {
     @dev Set date and time from date and time string
     @param _dt Date as date and time string ("yyyy-mm-dd hh:mm:ss")
    */
-   function setDateTimeFromString(string _dt) public {
+   function setDateTimeFromString(string memory _dt) public {
 
      require(DateUtils.isISOtimeFormat(_dt));
 
@@ -264,7 +264,7 @@ contract Date {
       "": "Returns date string as \"yyyy-mm-dd\""
     }
    */
-   function getDateString() public view returns (string) {
+   function getDateString() public view returns (string memory) {
      return isoDate;
    }
 
@@ -274,7 +274,7 @@ contract Date {
       "" : "Returns date and time string as \"yyyy-mm-dd hh:mm:ss\""
     }
    */
-   function getDateTimeString() public view returns (string) {
+   function getDateTimeString() public view returns (string memory) {
      return isoDateTime;
    }
 
@@ -286,12 +286,5 @@ contract Date {
    */
    function getTimestamp() public view returns (uint256) {
      return timestampDate;
-   }
-
-   /**
-    @dev Terminate contract - must be owner
-   */
-   function terminate() external restricted {
-     selfdestruct(msg.sender);
    }
 }
